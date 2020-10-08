@@ -13,6 +13,7 @@ import { fromDTOHotelMarker } from "../utils/fromDTOHotelMarker";
 
 const useMap = () => {
   const mapRef = useRef<any>(null);
+  const mapAPIRef = useRef<any>(null);
   const [markersData, setMarkersData] = useState<Marker[]>([]);
 
   /**
@@ -35,7 +36,7 @@ const useMap = () => {
       zoom: 17,
       pixelRatio: window.devicePixelRatio || 1,
     });
-
+    mapAPIRef.current = map;
     map.addEventListener("dragend", function (evt: any) {
       const center: Center = map.getCenter();
       getListOfHotels(center.lat, center.lng).then((res) => {
@@ -56,9 +57,48 @@ const useMap = () => {
     };
   }, [mapRef]); // This will run this hook every time this ref is updated
 
+  useEffect(() => {
+    const markersArray = markersData.map((markerData: any) => {
+      const htmlElem: any = document.createElement("img");
+      htmlElem.src = markerData.iconSrc;
+      // activeHotel === markerData.id ? markerActiveIcon : markerData.iconSrc;
+      // htmlElem.innerHTML(`<img src=${markerData.iconSrc} />`);
+      const icon = new H.map.DomIcon(htmlElem, {
+        onAttach: function (clonedElement: any, domIcon: any, domMarker: any) {
+          clonedElement.addEventListener("click", () => {
+            console.warn("LOLOLOLOLOLOL");
+            // setActiveHotel(markerData.id);
+            // clonedElement.src = markerActiveIcon;
+            // setSelectedMarker(markerData.id);
+          });
+        },
+        // the function is called every time marker leaves the viewport
+        // onDetach: function(clonedElement:any, domIcon:any, domMarker:any) {
+        //   clonedElement.removeEventListener('mouseover', console.log("mouseOVER") );
+        // }
+      });
+      const marker = new H.map.DomMarker(
+        {
+          lat: markerData.lat,
+          lng: markerData.lng,
+        },
+        {
+          icon,
+        }
+      );
+      return marker;
+    });
+    const markersGroup = new H.map.Group();
+    markersGroup.addObjects(markersArray);
+
+    if (mapAPIRef.current) mapAPIRef.current.addObject(markersGroup);
+    // setDOMmarkers(markersGroup);
+  }, [markersData]);
+
   console.log("markersGroup", markersData);
   return {
     mapRef,
+    someFunction: () => alert()
   };
 };
 
