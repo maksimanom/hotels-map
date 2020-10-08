@@ -1,4 +1,5 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
+
 import {
   BASE_URL,
   API_KEY,
@@ -7,9 +8,12 @@ import {
   DISCOVER_SEARCH,
   PATH,
 } from "../constants/API";
+import { getListOfHotels } from "../service/mapSevice";
+import { fromDTOHotelMarker } from "../utils/fromDTOHotelMarker";
 
 const useMap = () => {
   const mapRef = useRef<any>(null);
+  const [markersData, setMarkersData] = useState<Marker[]>([]);
 
   /**
    * Create the map instance
@@ -26,23 +30,33 @@ const useMap = () => {
       apikey: API_KEY,
     });
     const defaultLayers = platform.createDefaultLayers();
-    const hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
+    const map = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
       center: { lat: 49.4411, lng: 32.0644 },
       zoom: 17,
       pixelRatio: window.devicePixelRatio || 1,
     });
 
-    const ui = H.ui.UI.createDefault(hMap, defaultLayers);
+    map.addEventListener("dragend", function (evt: any) {
+      const center: Center = map.getCenter();
+      getListOfHotels(center.lat, center.lng).then((res) => {
+        const items = res.data.results.items;
+        const hotelsMarkerData: Marker[] = fromDTOHotelMarker(items);
+        setMarkersData(hotelsMarkerData);
+      });
+    });
 
-    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));
+    const ui = H.ui.UI.createDefault(map, defaultLayers);
+
+    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
     // This will act as a cleanup to run once this hook runs again.
     // This includes when the component un-mounts
     return () => {
-      hMap.dispose();
+      map.dispose();
     };
   }, [mapRef]); // This will run this hook every time this ref is updated
 
+  console.log("markersGroup", markersData);
   return {
     mapRef,
   };
