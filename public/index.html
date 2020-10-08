@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -13,10 +12,43 @@
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <title>Hotels map</title>
+    <!-- CONNECT APP TO HERE PLACES  -->
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-core.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"
+    ></script>
+
+    <!-- CAROUSEL -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      charset="UTF-8"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+    />
+
+    <title>Limehome hotels map</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="map"></div>
     <div id="root"></div>
   </body>
 </html>
