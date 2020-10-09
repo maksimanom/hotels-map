@@ -1,3 +1,5 @@
+declare module "react-slick";
+
 interface Marker {
   id: string;
   lat: number;
