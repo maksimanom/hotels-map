@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 import Slider from "react-slick";
 
@@ -20,13 +20,20 @@ const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
     arrows: false,
   };
 
-  console.warn(markersData);
+  useEffect(() => {
+    const elementNumber = markersData.findIndex(
+      (item: any) => item.id === selectedHotel
+    );    
+    carouselRef?.current?.slickGoTo(elementNumber);
+  }, [selectedHotel]);
+
+  if (!markersData || !markersData.length) return null;
 
   return (
     <div className="carousel">
       <div className="carousel-container">
         <Slider ref={carouselRef} {...settings}>
-          {markersData.map((hotel: any, index: number) => (
+          {markersData.map((hotel: Marker, index: number) => (
             <div key={index} className="hotel-card">
               <div className="hotel-info">
                 <img src="" alt="" />

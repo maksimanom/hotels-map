@@ -8,6 +8,7 @@ interface Marker {
   distance: number;
   address: string;
   iconSrc: string;
+  price?: number | undefined | null;
 }
 
 interface Center {
