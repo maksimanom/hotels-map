@@ -7,8 +7,10 @@ import markerDefault from "../../icons/burger-icon.svg";
 const Header = () => {
   return (
     <div className="header">
-      <img src={limehomeLogo} className="header-logo" alt="" />
-      <img src={markerDefault} className="burger-menu" alt="" />
+      <div className="navigation">
+        <img src={limehomeLogo} className="header-logo" alt="" />
+        <img src={markerDefault} className="burger-menu" alt="" />
+      </div>
     </div>
   );
 };
