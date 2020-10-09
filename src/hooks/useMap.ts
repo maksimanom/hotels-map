@@ -10,21 +10,22 @@ import {
 } from "../constants/API";
 import { getListOfHotels } from "../service/mapSevice";
 import { fromDTOHotelMarker } from "../utils/fromDTOHotelMarker";
+import { getMarkersGroup } from "../utils/getMarkersGroup";
 
 const useMap = () => {
   const mapRef = useRef<any>(null);
   const mapAPIRef = useRef<any>(null);
   const [markersData, setMarkersData] = useState<Marker[]>([]);
+  const [mapMarkersGroup, setMapMarkersGroup] = useState<any>();
+  const [selectedHotel, setSelectedHotel] = useState<string>("");
 
-  /**
-   * Create the map instance
-   * While `useEffect` could also be used here, `useLayoutEffect` will render
-   * the map sooner
-   */
+  const selectHotel = (id: string) => {
+    setSelectedHotel(id);
+  };
+
   const H = (window as any).H;
 
   useLayoutEffect(() => {
-    // `mapRef.current` will be `undefined` when this hook first runs; edge case that
     if (!mapRef.current) return;
 
     const platform = new H.service.Platform({
@@ -50,55 +51,30 @@ const useMap = () => {
 
     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
-    // This will act as a cleanup to run once this hook runs again.
-    // This includes when the component un-mounts
     return () => {
       map.dispose();
     };
-  }, [mapRef]); // This will run this hook every time this ref is updated
+  }, [mapRef]);
 
   useEffect(() => {
-    const markersArray = markersData.map((markerData: any) => {
-      const htmlElem: any = document.createElement("img");
-      htmlElem.src = markerData.iconSrc;
-      // activeHotel === markerData.id ? markerActiveIcon : markerData.iconSrc;
-      // htmlElem.innerHTML(`<img src=${markerData.iconSrc} />`);
-      const icon = new H.map.DomIcon(htmlElem, {
-        onAttach: function (clonedElement: any, domIcon: any, domMarker: any) {
-          clonedElement.addEventListener("click", () => {
-            console.warn("LOLOLOLOLOLOL");
-            // setActiveHotel(markerData.id);
-            // clonedElement.src = markerActiveIcon;
-            // setSelectedMarker(markerData.id);
-          });
-        },
-        // the function is called every time marker leaves the viewport
-        // onDetach: function(clonedElement:any, domIcon:any, domMarker:any) {
-        //   clonedElement.removeEventListener('mouseover', console.log("mouseOVER") );
-        // }
-      });
-      const marker = new H.map.DomMarker(
-        {
-          lat: markerData.lat,
-          lng: markerData.lng,
-        },
-        {
-          icon,
-        }
-      );
-      return marker;
-    });
-    const markersGroup = new H.map.Group();
-    markersGroup.addObjects(markersArray);
-
+    mapMarkersGroup && mapAPIRef.current.removeObject(mapMarkersGroup);
+    const markersGroup = getMarkersGroup(
+      markersData,
+      selectHotel,
+      selectedHotel
+    );
+    setMapMarkersGroup(markersGroup);
     if (mapAPIRef.current) mapAPIRef.current.addObject(markersGroup);
-    // setDOMmarkers(markersGroup);
-  }, [markersData]);
+  }, [markersData, selectedHotel]);
+
+  // useEffect(() => {
+
+  // }, [selectedHotel]);
 
   console.log("markersGroup", markersData);
+  console.log("selectedHotel", selectedHotel);
   return {
     mapRef,
-    someFunction: () => alert()
   };
 };
 
