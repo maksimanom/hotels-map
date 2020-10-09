@@ -15,6 +15,7 @@
 }
 
 .hotel-card {
+  min-height: 200px;
   background-color: #ffffff;
   padding: 15px;
   display: flex;
@@ -48,4 +49,9 @@
 
 .hotel-image {
   width: 40%;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

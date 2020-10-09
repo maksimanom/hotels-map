@@ -38,11 +38,15 @@ const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
             <div key={index} className="card-wrapper">
               <div className="hotel-card">
                 <div className="hotel-info">
-                  <img
-                    src={hotel.imageSrc || defaultImage}
-                    alt="hotel-photo"
-                    className="hotel-image"
-                  />
+                  {hotel.imageSrc ? (
+                    <img
+                      src={hotel.imageSrc}
+                      alt="hotel-photo"
+                      className="hotel-image"
+                    />
+                  ) : (
+                    <div className="hotel-image">NO PHOTO AVAILABLE</div>
+                  )}
                   <div className="hotel-description">
                     <div>
                       <h3>{hotel.title}</h3>
