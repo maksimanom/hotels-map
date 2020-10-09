@@ -4,6 +4,6 @@ interface MapProps {
   mapRef: any;
 }
 const Map: React.FC<MapProps> = ({ mapRef }) => {
-  return <div className="map" ref={mapRef} style={{ height: "500px" }} />;
+  return <div className="map" ref={mapRef} style={{ height: "100%" }} />;
 };
 export default Map;

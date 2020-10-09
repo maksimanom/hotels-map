@@ -1,11 +1,11 @@
-.slider {
+.carousel {
   width: 100%;
   position: fixed;
   padding: 0 10px 10px 10px;
   box-sizing: border-box;
   bottom: 0;
 }
-.slider-container {
+.carousel-container {
   /* margin: 0 auto;
   padding: 0px 40px 40px 40px; */
   /* width: 100%; */

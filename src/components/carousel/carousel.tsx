@@ -9,7 +9,7 @@ interface CarouselProps {
   selectedHotel: string;
 }
 const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
-  const sliderRef = useRef<any>();
+  const carouselRef = useRef<any>();
 
   const settings = {
     dots: false,
@@ -23,9 +23,9 @@ const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
   console.warn(markersData);
 
   return (
-    <div className="slider">
-      <div className="slider-container">
-        <Slider ref={sliderRef} {...settings}>
+    <div className="carousel">
+      <div className="carousel-container">
+        <Slider ref={carouselRef} {...settings}>
           {markersData.map((hotel: any, index: number) => (
             <div key={index} className="hotel-card">
               <div className="hotel-info">
