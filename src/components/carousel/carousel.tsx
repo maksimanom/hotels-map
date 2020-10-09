@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
 import Slider from "react-slick";
+import defaultImage from "../../icons/no-photo.jpg";
 
 import "./carousel-styles.css";
 
@@ -23,7 +24,7 @@ const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
   useEffect(() => {
     const elementNumber = markersData.findIndex(
       (item: any) => item.id === selectedHotel
-    );    
+    );
     carouselRef?.current?.slickGoTo(elementNumber);
   }, [selectedHotel]);
 
@@ -34,19 +35,28 @@ const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
       <div className="carousel-container">
         <Slider ref={carouselRef} {...settings}>
           {markersData.map((hotel: Marker, index: number) => (
-            <div key={index} className="hotel-card">
-              <div className="hotel-info">
-                <img src="" alt="" />
-                <div className="hotel-description">
-                  <div>
-                    <h3>{hotel.title}</h3>
-                    <p>{hotel.distance}m</p>
-                  </div>
-                  <div>
-                    <p>{hotel.price || "no price info"}</p>
-                    <p>Designs may vary</p>
+            <div key={index} className="card-wrapper">
+              <div className="hotel-card">
+                <div className="hotel-info">
+                  <img
+                    src={hotel.imageSrc || defaultImage}
+                    alt="hotel-photo"
+                    className="hotel-image"
+                  />
+                  <div className="hotel-description">
+                    <div>
+                      <h3>{hotel.title}</h3>
+                      <p>{hotel.distance}m</p>
+                    </div>
+                    <div>
+                      <p>{hotel.price || "no price info"}</p>
+                      <p>Designs may vary</p>
+                    </div>
                   </div>
                 </div>
+              </div>
+              <div className="book-link-wrapper">
+                <a className="book-link">Book</a>
               </div>
             </div>
           ))}
