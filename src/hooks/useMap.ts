@@ -23,6 +23,15 @@ const useMap = () => {
     setSelectedHotel(id);
   };
 
+  const setNewListOfHotels = (map: any) => {
+    const center: Center = map.getCenter();
+    getListOfHotels(center.lat, center.lng).then((res) => {
+      const items = res.data.results.items;
+      const hotelsMarkerData: Marker[] = fromDTOHotelMarker(items);
+      setMarkersData(hotelsMarkerData);
+    });
+  };
+
   const H = (window as any).H;
 
   useLayoutEffect(() => {
@@ -34,17 +43,13 @@ const useMap = () => {
     const defaultLayers = platform.createDefaultLayers();
     const map = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
       center: { lat: 49.4411, lng: 32.0644 },
-      zoom: 17,
+      zoom: 15,
       pixelRatio: window.devicePixelRatio || 1,
     });
     mapAPIRef.current = map;
+    setNewListOfHotels(map); // not working when first render.
     map.addEventListener("dragend", function (evt: any) {
-      const center: Center = map.getCenter();
-      getListOfHotels(center.lat, center.lng).then((res) => {
-        const items = res.data.results.items;
-        const hotelsMarkerData: Marker[] = fromDTOHotelMarker(items);
-        setMarkersData(hotelsMarkerData);
-      });
+      setNewListOfHotels(map);
     });
 
     const ui = H.ui.UI.createDefault(map, defaultLayers);
