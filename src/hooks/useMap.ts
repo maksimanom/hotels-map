@@ -75,6 +75,8 @@ const useMap = () => {
   console.log("selectedHotel", selectedHotel);
   return {
     mapRef,
+    markersData,
+    selectedHotel,
   };
 };
 

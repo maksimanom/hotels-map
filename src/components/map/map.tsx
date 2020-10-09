@@ -1,9 +1,9 @@
-import React from "react";
-import useMap from "../../hooks/useMap";
+import React, { ReactNode } from "react";
 
-const Map = () => {
-  const { mapRef } = useMap();
-
+interface MapProps {
+  mapRef: any;
+}
+const Map: React.FC<MapProps> = ({ mapRef }) => {
   return <div className="map" ref={mapRef} style={{ height: "500px" }} />;
 };
 export default Map;

@@ -1,0 +1,25 @@
+.slider {
+  width: 100%;
+  position: fixed;
+  padding: 0 10px 10px 10px;
+  box-sizing: border-box;
+  bottom: 0;
+}
+.slider-container {
+  /* margin: 0 auto;
+  padding: 0px 40px 40px 40px; */
+  /* width: 100%; */
+  height: auto;
+}
+.hotel-card {
+  background-color: #ffffff;
+  padding: 15px;
+}
+.hotel-info {
+  display: flex;
+}
+.hotel-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
