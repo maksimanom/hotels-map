@@ -15,5 +15,5 @@ interface Marker {
 interface Center {
   lat: number;
   lng: number;
-  alt: number;
+  alt?: number;
 }

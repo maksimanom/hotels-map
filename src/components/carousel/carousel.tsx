@@ -7,11 +7,13 @@ import "./carousel-styles.css";
 interface CarouselProps {
   markersData: Marker[];
   selectedHotel: string;
+  changeSelectedHotelBySlider: Function;
   setSelectedHotel: Function;
 }
 const Carousel: React.FC<CarouselProps> = ({
   markersData,
   selectedHotel,
+  changeSelectedHotelBySlider,
   setSelectedHotel,
 }) => {
   const carouselRef = useRef<any>();
@@ -25,8 +27,24 @@ const Carousel: React.FC<CarouselProps> = ({
     arrows: false,
     adaptiveHeight: true,
     afterChange: (currentSlideNumber: number) => {
-      const id = markersData[currentSlideNumber].id;
+      const element: Marker = markersData[currentSlideNumber];
+      const { id, lat, lng } = element;
       setSelectedHotel(id);
+    },
+    onSwipe: (toSide: string) => {
+      const currentSlide = carouselRef.current.innerSlider.state.currentSlide;
+      const curSlideNum =
+        toSide === "left" ? currentSlide + 1 : currentSlide - 1;
+      let n: number = curSlideNum;
+      if (curSlideNum >= markersData.length) {
+        n = 0;
+      }
+      if (curSlideNum < 0) {
+        n = markersData.length - 1;
+      }
+      const element: Marker = markersData[n];
+      const { id, lat, lng } = element;
+      changeSelectedHotelBySlider(id, lat, lng);
     },
   };
 
@@ -35,7 +53,7 @@ const Carousel: React.FC<CarouselProps> = ({
       (item: any) => item.id === selectedHotel
     );
     carouselRef?.current?.slickGoTo(elementNumber);
-  }, [selectedHotel]);
+  }, [markersData, selectedHotel]);
 
   if (!markersData || !markersData.length) return null;
   return (
@@ -58,7 +76,9 @@ const Carousel: React.FC<CarouselProps> = ({
                   <div className="hotel-description">
                     <div>
                       <h3 className="hotel-title">{hotel.title}</h3>
-                      <p>{hotel.distance}m</p>
+                      <p>
+                        {hotel.distance}m #{index}
+                      </p>
                     </div>
                     <div>
                       <p>{hotel.price || "no price info"}</p>

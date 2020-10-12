@@ -1,8 +1,6 @@
 import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 
-import {
-  API_KEY,
-} from "../constants/API";
+import { API_KEY } from "../constants/API";
 import { getListOfHotels } from "../service/mapSevice";
 import { fromDTOHotelMarker } from "../utils/fromDTOHotelMarker";
 import { getMarkersGroup } from "../utils/getMarkersGroup";
@@ -27,6 +25,15 @@ const useMap = () => {
     });
   };
 
+  const changeSelectedHotelBySlider = (
+    id: string,
+    lat: number,
+    lng: number
+  ) => {
+    // setSelectedHotel(id);
+    mapAPIRef.current.setCenter({ lat, lng });
+  };
+
   const H = (window as any).H;
 
   useLayoutEffect(() => {
@@ -46,6 +53,10 @@ const useMap = () => {
     map.addEventListener("dragend", function (evt: any) {
       setNewListOfHotels(map);
     });
+
+    // map.addEventListener("dragend", function (evt: any) {
+    //   setNewListOfHotels(map);
+    // });
 
     const ui = H.ui.UI.createDefault(map, defaultLayers);
 
@@ -70,6 +81,7 @@ const useMap = () => {
   return {
     mapRef,
     markersData,
+    changeSelectedHotelBySlider,
     setSelectedHotel,
     selectedHotel,
   };
