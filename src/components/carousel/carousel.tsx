@@ -1,24 +1,33 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 
 import Slider from "react-slick";
-import defaultImage from "../../icons/no-photo.jpg";
 
 import "./carousel-styles.css";
 
 interface CarouselProps {
   markersData: Marker[];
   selectedHotel: string;
+  setSelectedHotel: Function;
 }
-const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
+const Carousel: React.FC<CarouselProps> = ({
+  markersData,
+  selectedHotel,
+  setSelectedHotel,
+}) => {
   const carouselRef = useRef<any>();
 
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
+    adaptiveHeight: true,
+    afterChange: (currentSlideNumber: number) => {
+      const id = markersData[currentSlideNumber].id;
+      setSelectedHotel(id);
+    },
   };
 
   useEffect(() => {
@@ -29,7 +38,6 @@ const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
   }, [selectedHotel]);
 
   if (!markersData || !markersData.length) return null;
-
   return (
     <div className="carousel">
       <div className="carousel-container">
@@ -49,7 +57,7 @@ const Carousel: React.FC<CarouselProps> = ({ markersData, selectedHotel }) => {
                   )}
                   <div className="hotel-description">
                     <div>
-                      <h3>{hotel.title}</h3>
+                      <h3 className="hotel-title">{hotel.title}</h3>
                       <p>{hotel.distance}m</p>
                     </div>
                     <div>

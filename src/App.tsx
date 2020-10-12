@@ -8,13 +8,17 @@ import Carousel from "./components/carousel/carousel";
 import useMap from "./hooks/useMap";
 
 function App() {
-  const { mapRef, markersData, selectedHotel } = useMap();
+  const { mapRef, markersData, setSelectedHotel, selectedHotel } = useMap();
 
   return (
     <div className="app">
       <Header />
       <Map mapRef={mapRef} />
-      <Carousel markersData={markersData} selectedHotel={selectedHotel} />
+      <Carousel
+        markersData={markersData}
+        setSelectedHotel={setSelectedHotel}
+        selectedHotel={selectedHotel}
+      />
     </div>
   );
 }

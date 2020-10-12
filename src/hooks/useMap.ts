@@ -1,12 +1,7 @@
 import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 
 import {
-  BASE_URL,
   API_KEY,
-  APP_ID,
-  DISCOVER_EXPLORE,
-  DISCOVER_SEARCH,
-  PATH,
 } from "../constants/API";
 import { getListOfHotels } from "../service/mapSevice";
 import { fromDTOHotelMarker } from "../utils/fromDTOHotelMarker";
@@ -72,15 +67,10 @@ const useMap = () => {
     if (mapAPIRef.current) mapAPIRef.current.addObject(markersGroup);
   }, [markersData, selectedHotel]);
 
-  // useEffect(() => {
-
-  // }, [selectedHotel]);
-
-  console.log("markersGroup", markersData);
-  console.log("selectedHotel", selectedHotel);
   return {
     mapRef,
     markersData,
+    setSelectedHotel,
     selectedHotel,
   };
 };
