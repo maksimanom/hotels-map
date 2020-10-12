@@ -21,16 +21,8 @@ const useMap = () => {
     getListOfHotels(center.lat, center.lng).then((res) => {
       const items = res.data.results.items;
       const hotelsMarkerData: Marker[] = fromDTOHotelMarker(items);
-      const currentIdsArray: string[] = markersData.map((item) => item.id);
-      const idOfSelectedIsPresent = currentIdsArray.includes(selectedHotel);
-      console.log("markersData", markersData);
-      console.log("currentIdsArray", currentIdsArray);
-      console.log("selectedHotel", selectedHotel);
-      console.log("idOfSelectedIsPresent", idOfSelectedIsPresent);
-      if (!idOfSelectedIsPresent) setSelectedHotel("");
       setMarkersData(hotelsMarkerData);
     });
-    console.log("markersData12321312312", markersData);
   };
 
   const changeSelectedHotelBySlider = (
