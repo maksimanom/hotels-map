@@ -6,15 +6,21 @@ import Map from "./components/map/map";
 import Carousel from "./components/carousel/carousel";
 
 import useMap from "./hooks/useMap";
+import useMarker from "./hooks/useMarker";
 
-function App() {
+const App = () => {
+  const { markersData, refetchMarkers } = useMarker();
+
   const {
     mapRef,
-    markersData,
     changeSelectedHotelBySlider,
     setSelectedHotel,
     selectedHotel,
-  } = useMap();
+  } = useMap(markersData, refetchMarkers);
+
+  // const handleDragEnd = (map: any, markersData: Marker[]) => {
+  //   onDragEnd(map, markersData);
+  // };
 
   return (
     <div className="app">
@@ -28,6 +34,6 @@ function App() {
       />
     </div>
   );
-}
+};
 
 export default App;

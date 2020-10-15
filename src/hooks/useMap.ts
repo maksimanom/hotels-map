@@ -1,28 +1,16 @@
 import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 
 import { API_KEY } from "../constants/API";
-import { getListOfHotels } from "../service/mapSevice";
-import { fromDTOHotelMarker } from "../utils/fromDTOHotelMarker";
 import { getMarkersGroup } from "../utils/getMarkersGroup";
 
-const useMap = () => {
+const useMap = (markersData: Marker[], refetchMarkers: Function) => {
   const mapRef = useRef<any>(null);
   const mapAPIRef = useRef<any>(null);
-  const [markersData, setMarkersData] = useState<Marker[]>([]);
   const [mapMarkersGroup, setMapMarkersGroup] = useState<any>();
   const [selectedHotel, setSelectedHotel] = useState<string>("");
 
   const selectHotel = (id: string) => {
     setSelectedHotel(id);
-  };
-
-  const setNewListOfHotels = (map: any) => {
-    const center: Center = map.getCenter();
-    getListOfHotels(center.lat, center.lng).then((res) => {
-      const items = res.data.results.items;
-      const hotelsMarkerData: Marker[] = fromDTOHotelMarker(items);
-      setMarkersData(hotelsMarkerData);
-    });
   };
 
   const changeSelectedHotelBySlider = (
@@ -36,9 +24,7 @@ const useMap = () => {
 
   const H = (window as any).H;
 
-  useLayoutEffect(() => {
-    if (!mapRef.current) return;
-
+  useEffect(() => {
     const platform = new H.service.Platform({
       apikey: API_KEY,
     });
@@ -49,14 +35,10 @@ const useMap = () => {
       pixelRatio: window.devicePixelRatio || 1,
     });
     mapAPIRef.current = map;
-    setNewListOfHotels(map); // not working when first render.
-    map.addEventListener("dragend", () => {
-      setNewListOfHotels(map);
+    // onDragEnd(map); // not working when first render.
+    map.addEventListener("dragend", (e: any) => {
+      refetchMarkers(map, markersData);
     });
-
-    // map.addEventListener("dragend", function (evt: any) {
-    //   setNewListOfHotels(map);
-    // });
 
     const ui = H.ui.UI.createDefault(map, defaultLayers);
 
@@ -80,10 +62,10 @@ const useMap = () => {
 
   return {
     mapRef,
-    markersData,
     changeSelectedHotelBySlider,
     setSelectedHotel,
     selectedHotel,
+    mapAPIRef,
   };
 };
 
