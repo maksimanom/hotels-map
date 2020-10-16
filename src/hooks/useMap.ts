@@ -22,6 +22,10 @@ const useMap = (markersData: Marker[], refetchMarkers: Function) => {
     mapAPIRef.current.setCenter({ lat, lng });
   };
 
+  const onDragEnd = () => {
+    refetchMarkers(mapAPIRef.current);
+  };
+
   const H = (window as any).H;
 
   useEffect(() => {
@@ -35,10 +39,6 @@ const useMap = (markersData: Marker[], refetchMarkers: Function) => {
       pixelRatio: window.devicePixelRatio || 1,
     });
     mapAPIRef.current = map;
-    // onDragEnd(map); // not working when first render.
-    map.addEventListener("dragend", (e: any) => {
-      refetchMarkers(map, markersData);
-    });
 
     const ui = H.ui.UI.createDefault(map, defaultLayers);
 
@@ -59,6 +59,14 @@ const useMap = (markersData: Marker[], refetchMarkers: Function) => {
     setMapMarkersGroup(markersGroup);
     if (mapAPIRef.current) mapAPIRef.current.addObject(markersGroup);
   }, [markersData, selectedHotel]);
+
+  useEffect(() => {
+    // onDragEnd(); // not working when first render.
+    mapAPIRef.current.addEventListener("dragend", onDragEnd);
+    return () => {
+      mapAPIRef.current.removeEventListener("dragend", onDragEnd);
+    };
+  }, []);
 
   return {
     mapRef,

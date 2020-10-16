@@ -14,13 +14,8 @@ const App = () => {
   const {
     mapRef,
     changeSelectedHotelBySlider,
-    setSelectedHotel,
     selectedHotel,
   } = useMap(markersData, refetchMarkers);
-
-  // const handleDragEnd = (map: any, markersData: Marker[]) => {
-  //   onDragEnd(map, markersData);
-  // };
 
   return (
     <div className="app">
@@ -29,7 +24,6 @@ const App = () => {
       <Carousel
         markersData={markersData}
         changeSelectedHotelBySlider={changeSelectedHotelBySlider}
-        setSelectedHotel={setSelectedHotel}
         selectedHotel={selectedHotel}
       />
     </div>

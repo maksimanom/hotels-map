@@ -8,13 +8,11 @@ interface CarouselProps {
   markersData: Marker[];
   selectedHotel: string;
   changeSelectedHotelBySlider: Function;
-  setSelectedHotel: Function;
 }
 const Carousel: React.FC<CarouselProps> = ({
   markersData,
   selectedHotel,
   changeSelectedHotelBySlider,
-  setSelectedHotel,
 }) => {
   const carouselRef = useRef<any>();
 
@@ -26,11 +24,6 @@ const Carousel: React.FC<CarouselProps> = ({
     slidesToScroll: 1,
     arrows: false,
     adaptiveHeight: true,
-    // afterChange: (currentSlideNumber: number) => {
-    //   const element: Marker = markersData[currentSlideNumber];
-    //   const { id, lat, lng } = element;
-    //   setSelectedHotel(id);
-    // },
     onSwipe: (toSide: string) => {
       const currentSlide = carouselRef.current.innerSlider.state.currentSlide;
       const curSlideNum =
@@ -44,7 +37,6 @@ const Carousel: React.FC<CarouselProps> = ({
       }
       const element: Marker = markersData[n];
       const { id, lat, lng } = element;
-      console.log(id, lat, lng);
       changeSelectedHotelBySlider(id, lat, lng);
     },
   };
@@ -77,9 +69,7 @@ const Carousel: React.FC<CarouselProps> = ({
                   <div className="hotel-description">
                     <div>
                       <h3 className="hotel-title">{hotel.title}</h3>
-                      <p>
-                        {hotel.distance}m
-                      </p>
+                      <p>{hotel.distance}m</p>
                     </div>
                     <div>
                       <p>{hotel.price || "no price info"}</p>
