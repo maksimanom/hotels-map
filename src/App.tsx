@@ -6,15 +6,16 @@ import Map from "./components/map/map";
 import Carousel from "./components/carousel/carousel";
 
 import useMap from "./hooks/useMap";
+import useMarker from "./hooks/useMarker";
 
-function App() {
+const App = () => {
+  const { markersData, refetchMarkers } = useMarker();
+
   const {
     mapRef,
-    markersData,
     changeSelectedHotelBySlider,
-    setSelectedHotel,
     selectedHotel,
-  } = useMap();
+  } = useMap(markersData, refetchMarkers);
 
   return (
     <div className="app">
@@ -23,11 +24,10 @@ function App() {
       <Carousel
         markersData={markersData}
         changeSelectedHotelBySlider={changeSelectedHotelBySlider}
-        setSelectedHotel={setSelectedHotel}
         selectedHotel={selectedHotel}
       />
     </div>
   );
-}
+};
 
 export default App;
