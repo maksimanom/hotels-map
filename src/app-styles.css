@@ -1,6 +1,5 @@
-@import "~normalize.css";
-
-.app{
+.app {
   height: 100vh;
   width: 100%;
+  position: fixed;
 }

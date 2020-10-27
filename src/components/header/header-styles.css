@@ -1,5 +1,15 @@
-.header {
+.navigation {
   display: flex;
   justify-content: space-between;
   padding: 10px;
+}
+
+.burger-menu:hover {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
 }

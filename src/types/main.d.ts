@@ -8,11 +8,12 @@ interface Marker {
   distance: number;
   address: string;
   iconSrc: string;
-  price?: number | undefined | null;
+  price?: number;
+  imageSrc?: string;
 }
 
 interface Center {
   lat: number;
   lng: number;
-  alt: number;
+  alt?: number;
 }

@@ -3,9 +3,7 @@ import axios from "axios";
 import {
   BASE_URL,
   API_KEY,
-  APP_ID,
   DISCOVER_EXPLORE,
-  DISCOVER_SEARCH,
   PATH,
 } from "../constants/API";
 

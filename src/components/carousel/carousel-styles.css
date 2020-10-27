@@ -1,25 +1,68 @@
 .carousel {
-  width: 100%;
+  width: 95%;
   position: fixed;
-  padding: 0 10px 10px 10px;
+  padding: 0 0 10px 0;
   box-sizing: border-box;
   bottom: 0;
 }
+
 .carousel-container {
-  /* margin: 0 auto;
-  padding: 0px 40px 40px 40px; */
-  /* width: 100%; */
   height: auto;
 }
+
+.card-wrapper {
+  width: 95% !important;
+}
+
 .hotel-card {
+  min-height: 176px;
   background-color: #ffffff;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
 }
+
 .hotel-info {
   display: flex;
 }
+
 .hotel-description {
+  padding-left: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.book-link-wrapper {
+  padding: 0 15px 15px 15px;
+  background-color: #ffffff;
+}
+
+.book-link {
+  display: block;
+  width: 90%;
+  background: #ffaa00;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.hotel-image {
+  font-size: 10px;
+  width: 33%;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slick-list {
+  overflow: visible;
+}
+
+.hotel-title {
+  margin: 0 0 10px 0;
+  max-height: 42px;
+  overflow: hidden;
 }
