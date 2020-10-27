@@ -24,3 +24,4 @@ yarn-error.log*
 
 /src/constants/API.ts
 /src/constants/API
+.env
